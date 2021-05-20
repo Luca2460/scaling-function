@@ -7,7 +7,7 @@ import h5py
 import matplotlib.pyplot as plt
 from math import sqrt
 
-dataset = "dataset BCC N=15.hdf5"
+dataset = "dataset.hdf5"
 dataset0 = "dataset0.hdf5" 
 
 f = h5py.File(dataset, "r")
@@ -75,7 +75,7 @@ def retrieveFromSampleDict(d):
 
 
 def rescale(T, ki, H):
-    Tc = 0.67
+    Tc = 0.41
 
     delta = 4.8
     gamma = 1.39

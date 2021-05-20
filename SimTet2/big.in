@@ -1,6 +1,6 @@
 # Simulation parameters
 N=15
-Nthermal=40000
+Nthermal=10000
 # Higher Nthermal produces less noise in final results, try higher than 30k (100k is noiseless, 10k is noisy)
 Nmeasure=1000
 Nanneal=5000
@@ -12,7 +12,8 @@ Nsample=10
 # Physical parameters
 temperature=0.5
 J=1
-ds=1
+# Jz = ds
+ds=0.1
 kb=1
 H=(0 0 1)
 
