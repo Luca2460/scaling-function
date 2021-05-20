@@ -14,7 +14,7 @@ Hs = np.array([0.1, 0.2,
 # Hs = np.array([0])
 
 Tc = 0.401
-Ts = np.linspace(1.8, 2.2, 15) # 20 # Ts = np.linspace(0.1, 2, 200) 
+Ts = np.linspace(2.2, 5, 15) # 20 # Ts = np.linspace(0.1, 2, 200) 
 Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
 Ts = Tc + Tc*np.exp(Ts)
 
