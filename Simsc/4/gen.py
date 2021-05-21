@@ -5,27 +5,25 @@ from os import system
 import h5py
 
 # used to generate dataset (?) (you need to manually change the name of the dataset below)
-Hs = np.array([0.1, 0.2,
-               1, 1.1,
-               2, 2.1,
-               3, 3.1])
+#Hs = np.array([0.1, 0.2,
+#               1, 1.1,
+#               2, 2.1,
+#               3, 3.1])
 
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
-# Hs = np.array([0])
+Hs = np.array([0])
 
-Tc = 0.39
-Ts = np.linspace(-7, 4, 10) # 20 # Ts = np.linspace(0.1, 2, 200) 
-Ts = Ts*np.log(10)
-Ts = Tc + Tc*np.exp(Ts)
+Ts = np.linspace(0.6, 0.85, 30) # 20 # Ts = np.linspace(0.1, 2, 200) 
+# I might want to loop through thr values of ds too
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 2500
+Nanneal = 2500 # 5000
 
 outfile = outdir + "out"
 statefile = outdir + "state"
 
-Nsample = 1
+Nsample = 10 # 10
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
@@ -36,8 +34,6 @@ with h5py.File("dataset.hdf5", "w") as f:
     # I would need to add a for here looping the rest of the code
     # to loop in the various ds values. I might want to launch sim
     # for differents values separately though.
-    
-    # grp.attrs["ds"] = ds would need to have ds in here like Hs
 
     for sample in samples:
         print("\n*** NEW SAMPLE # {} ***".format(sample))
