@@ -20,12 +20,12 @@ Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 5000 # to be adjusted with the total number of thermalization steps
+Nanneal = 2500 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
 
-Nsample = 10
+Nsample = 1
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
