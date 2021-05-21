@@ -12,7 +12,8 @@ Nsample=10
 # Physical parameters
 temperature=0.5
 J=1
-ds=0.1
+# Jz = ds
+ds=10
 kb=1
 H=(0 0 1)
 
