@@ -8,10 +8,10 @@ import h5py
 import matplotlib.pyplot as plt
 from math import sqrt
 
-# dataset = "dataset.hdf5" # UNCOMMENT THIS TO PLOT SCALING FCT
+# dataset = "dataset.hdf5"
 # dataset0 = "dataset0.hdf5" 
 
-# #f = h5py.File(dataset, "r") # UNCOMMENT THIS TO PLOT SCALING FCT
+# #f = h5py.File(dataset, "r")
 # # f0 = h5py.File(dataset0, "r") # To plot at H=0 and be used with retrieveData2() below
 
 def MandSigmaFromSampleDict(d, err=False):
@@ -78,7 +78,7 @@ def retrieveFromSampleDict(d):
 def rescale(T, ki, H):
     Tc = 0.40
 
-    delta = 7.5 # 4.8
+    delta = 15 #7.5 # 4.8
     gamma = 1.75 # 1.39
     beta = 0.125 # 0.365
 
@@ -123,12 +123,24 @@ def scaling():
 # Plot magnetisations vs Ts for various fields H
 def MsvsTs():
     plt.figure()
-    for i in range(len(Ms)): # lend(Ms) = num of different H fields used
+    for i in range(len(Ms)): # len(Ms) = num of different H fields used
         plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
 
     plt.xlabel("T")
     plt.ylabel("M")
     plt.legend()
+
+# To find Tc with only one value of H, H=0.
+def MsvsTs0():
+    plt.figure()
+    for i in range(1): 
+        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
+
+    plt.xlabel("T")
+    plt.ylabel("M")
+    plt.legend()
+
+
 
 ### MERGE DATASETS ###
 Mtot = [[], [], [], [], [], [], [], []] # 8 values of H
@@ -153,8 +165,10 @@ sigmas = np.array(sigmastot)
 ################
 
 ################
+#MsvsTs0()
 MsvsTs()
 scaling()
+
 
 
 # # PLOTING SCALING FUNCTION (requires plt.show(), actually at the bottom)

@@ -31,7 +31,7 @@ Nsample = 15
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
-with h5py.File("dataset6.hdf5", "w") as f:
+with h5py.File("dataset7.hdf5", "w") as f:
     f.attrs["config"] = config
     f.attrs["Nanneal"] = Nanneal
 

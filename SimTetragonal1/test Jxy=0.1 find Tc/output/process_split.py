@@ -150,7 +150,7 @@ Ttot = []
 ################
 
 ################
-for i in range(7): ### INSERT NUMBER OF DATASETS HERE ###
+for i in range(2): ### INSERT NUMBER OF DATASETS HERE ###
     dataset = "dataset" + str(i+1) + ".hdf5" 
     f = h5py.File(dataset, "r")
     Hs, Ts, Ms, sigmas = retrieveData()
@@ -165,9 +165,9 @@ sigmas = np.array(sigmastot)
 ################
 
 ################
-#MsvsTs0()
-MsvsTs()
-scaling()
+MsvsTs0()
+#MsvsTs()
+#scaling()
 
 
 
