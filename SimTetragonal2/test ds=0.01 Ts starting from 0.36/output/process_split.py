@@ -78,7 +78,7 @@ def retrieveFromSampleDict(d):
 def rescale(T, ki, H):
     Tc = 0.40
 
-    delta = 7.5 # 4.8
+    delta = 15 #7.5 # 4.8
     gamma = 1.75 # 1.39
     beta = 0.125 # 0.365
 
