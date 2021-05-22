@@ -76,7 +76,7 @@ def retrieveFromSampleDict(d):
 
 
 def rescale(T, ki, H):
-    Tc = 0.39
+    Tc = 0.40
 
     delta = 7.5 # 4.8
     gamma = 1.75 # 1.39
@@ -134,7 +134,11 @@ def MsvsTs():
 Mtot = [[], [], [], [], [], [], [], []] # 8 values of H
 sigmastot = [[], [], [], [], [], [], [], []]
 Ttot = []
-for i in range(6): ### INSERT NUMBER OF DATASETS HERE ###
+
+################
+
+################
+for i in range(7): ### INSERT NUMBER OF DATASETS HERE ###
     dataset = "dataset" + str(i+1) + ".hdf5" 
     f = h5py.File(dataset, "r")
     Hs, Ts, Ms, sigmas = retrieveData()
@@ -146,6 +150,9 @@ Ms = np.array(Mtot)
 Ts = np.array(Ttot)
 sigmas = np.array(sigmastot)
 
+################
+
+################
 MsvsTs()
 scaling()
 
