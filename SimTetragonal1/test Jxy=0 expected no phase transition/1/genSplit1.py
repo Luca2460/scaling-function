@@ -18,7 +18,7 @@ Hs = np.array([0])
 #Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
 #Ts = Tc + Tc*np.exp(Ts)
 
-Ts = np.linspace(0.15, 0.18, 15)
+Ts = np.linspace(0.1, 0.15, 15)
 
 config = "big.in"
 outdir = "" #"data/big/"
@@ -27,11 +27,11 @@ Nanneal = 5000 # to be adjusted with the total number of thermalization steps
 outfile = outdir + "out"
 statefile = outdir + "state"
 
-Nsample = 15
+Nsample = 20
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
-with h5py.File("dataset2.hdf5", "w") as f:
+with h5py.File("dataset1.hdf5", "w") as f:
     f.attrs["config"] = config
     f.attrs["Nanneal"] = Nanneal
 
