@@ -5,24 +5,24 @@ from os import system
 import h5py
 
 # used to generate dataset (?) (you need to manually change the name of the dataset below)
-Hs = np.array([0.1, 0.2,
-               1, 1.1,
-               2, 2.1,
-               3, 3.1])
+#Hs = np.array([0.1, 0.2,
+#               1, 1.1,
+#               2, 2.1,
+#               3, 3.1])
 
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
-# Hs = np.array([0])
+Hs = np.array([0])
 
-# Tc = 0.67
-# Ts = np.linspace(-7, -4.8, 15) # 20 # Ts = np.linspace(0.1, 2, 200) 
-# Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
-# Ts = Tc + Tc*np.exp(Ts)
+#Tc = 2.05
+#Ts = np.linspace(-7, -4.8, 15) # 20 # Ts = np.linspace(0.1, 2, 200) 
+#Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
+#Ts = Tc + Tc*np.exp(Ts)
 
-Ts = np.linspace(0.57, 0.67, 100)
+Ts = np.linspace(0.001, 0.2, 40)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 5000 # to be adjusted with the total number of thermalization steps
+Nanneal = 3000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
