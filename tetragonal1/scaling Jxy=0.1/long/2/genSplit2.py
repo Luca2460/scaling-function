@@ -20,7 +20,7 @@ Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 2500 # to be adjusted with the total number of thermalization steps
+Nanneal = 5000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
