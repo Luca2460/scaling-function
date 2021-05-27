@@ -5,13 +5,13 @@ from os import system
 import h5py
 
 # used to generate dataset (?) (you need to manually change the name of the dataset below)
-#Hs = np.array([0.1, 0.2,
-#               1, 1.1,
-#               2, 2.1,
-#               3, 3.1])
+Hs = np.array([0.1, 0.2,
+              1, 1.1,
+              2, 2.1,
+              3, 3.1])
 
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
-Hs = np.array([0])
+#Hs = np.array([0])
 
 Tc = 0.205
 Ts = np.linspace(-6, 5, 100) # 20 # Ts = np.linspace(0.1, 2, 200) 
