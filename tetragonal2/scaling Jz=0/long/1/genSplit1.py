@@ -13,7 +13,7 @@ Hs = np.array([0.1, 0.2,
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
 # Hs = np.array([0])
 
-Ts = np.linspace(0.10, 0.125, 100) # 20 # Ts = np.linspace(0.1, 2, 200) 
+Ts = np.linspace(0.3, 0.35, 100) # 20 # Ts = np.linspace(0.1, 2, 200) 
 
 config = "big.in"
 outdir = "" #"data/big/"
