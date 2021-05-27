@@ -22,7 +22,7 @@ Ts = np.linspace(0.57, 0.67, 100)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 5000 # to be adjusted with the total number of thermalization steps
+Nanneal = 2000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
