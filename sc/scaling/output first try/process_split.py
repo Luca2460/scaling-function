@@ -76,11 +76,11 @@ def retrieveFromSampleDict(d):
 
 
 def rescale(T, ki, H):
-    Tc = 0.1145
+    Tc = 0.68
 
-    delta = 20 #7.5 # 4.8
-    gamma = 1.75 # 1.39
-    beta = 0.125 # 0.365
+    delta = 4.9
+    gamma = 1.39
+    beta = 0.365
 
     Treduce = T / Tc - 1
     
@@ -150,8 +150,8 @@ Ttot = []
 ################
 
 ################
-for i in range(2): ### INSERT NUMBER OF DATASETS HERE ###
-    dataset = "dataset" + str(i+1) + ".hdf5" 
+for i in range(1): ### INSERT NUMBER OF DATASETS HERE ###
+    dataset = "dataset" + str(i+1+1) + ".hdf5" 
     f = h5py.File(dataset, "r")
     Hs, Ts, Ms, sigmas = retrieveData()
     Ttot.extend(Ts)

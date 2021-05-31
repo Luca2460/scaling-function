@@ -14,13 +14,13 @@ Hs = np.array([0.1, 0.2,
 #Hs = np.array([0])
 
 Tc = 0.42
-Ts = np.linspace(-6, 5, 100)
+Ts = np.linspace(-6, 5, 50)
 Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
 Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 5000 # to be adjusted with the total number of thermalization steps
+Nanneal = 10000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
