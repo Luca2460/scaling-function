@@ -13,16 +13,14 @@ Hs = np.array([0.1, 0.2,
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
 # Hs = np.array([0])
 
-# Tc = 0.67
-# Ts = np.linspace(-6, -3.3, 22) # 20 # Ts = np.linspace(0.1, 2, 200) 
-# Ts = Ts*np.log(10)/1.755 # 1.755 should be gamma + beta
-# Ts = Tc + Tc*np.exp(Ts)
-
-Ts = np.linspace(0, 0.15, 40)
+Tc = 0.67
+Ts = np.linspace(-2, -1, 9) # 20 # Ts = np.linspace(0.1, 2, 200) 
+Ts = Ts*np.log(10)/1.755 # 1.755 should be gamma + beta
+Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 2000 # to be adjusted with the total number of thermalization steps
+Nanneal = 40000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
@@ -31,7 +29,7 @@ Nsample = 20
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
-with h5py.File("dataset1.hdf5", "w") as f:
+with h5py.File("dataset3.hdf5", "w") as f:
     f.attrs["config"] = config
     f.attrs["Nanneal"] = Nanneal
 

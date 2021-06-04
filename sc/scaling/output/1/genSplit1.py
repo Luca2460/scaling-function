@@ -13,12 +13,10 @@ Hs = np.array([0.1, 0.2,
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
 # Hs = np.array([0])
 
-# Tc = 0.67
-# Ts = np.linspace(-6, -3.3, 22) # 20 # Ts = np.linspace(0.1, 2, 200) 
-# Ts = Ts*np.log(10)/1.755 # 1.755 should be gamma + beta
-# Ts = Tc + Tc*np.exp(Ts)
-
-Ts = np.linspace(0, 0.15, 40)
+Tc = 0.67
+Ts = np.linspace(-6, -3.3, 22) # 20 # Ts = np.linspace(0.1, 2, 200) 
+Ts = Ts*np.log(10)/1.755 # 1.755 should be gamma + beta
+Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"

@@ -18,7 +18,7 @@ Hs = np.array([0])
 # Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
 # Ts = Tc + Tc*np.exp(Ts)
 
-Ts = np.linspace(0.3, 0.5, 20)
+Ts = np.linspace(0.36, 0.47, 30)
 
 config = "big.in"
 outdir = "" #"data/big/"
