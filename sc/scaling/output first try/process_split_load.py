@@ -88,44 +88,81 @@ def scaling(Tc, delta, gamma, beta):
     ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
     H_mean = (Hs[::2] + Hs[1::2]) / 2
 
+
+#     plt.figure()
+#     for H, ki in zip(Hs, ki_fluct):
+#         # plt.scatter(Ts, ki, label="H={}".format(H))
+#         x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
+#         plt.scatter(x, y, label="H={}".format(H))
+
+#     plt.xscale("log")
+#     plt.title("Tc={}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
+#     plt.xlabel("εˠ⁺ᵝ/H")
+#     plt.ylabel("χ/H^(1/̣δ-1)")
+# #    plt.xlim(1e-3, 1e1)
+# #    plt.ylim(0, 0.25)
+#     plt.legend()
+
     plt.figure()
-    for H, ki in zip(Hs, ki_fluct):
-        # plt.scatter(Ts, ki, label="H={}".format(H))
-        x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
-        plt.scatter(x, y, label="H={}".format(H))
+
+    # simple cubic
+    ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
+    H_mean = (Hs[::2] + Hs[1::2]) / 2
+    ki = ki_diff[2]
+    H = H_mean[2]
+    x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
+    plt.scatter(x,y, label="simple cubic")
+    #plt.scatter(x, y, label="H={:.2f},Tc={:.3f}, δ={}, γ + β={}".format(H, Tc, delta, gamma+ beta))
+
+    # tetragonal Jz=0.1
+    ki_diffTz = (MsTz[1::2] - MsTz[::2]) / 0.1
+    H_meanTz = (HsTz[::2] + HsTz[1::2]) / 2
+    ki_diffTz = ki_diffTz[2]
+    H_meanTz = H_meanTz[2]
+    x, y = rescale(TsTz, ki_diffTz, H_meanTz, TcTz, deltaTz, gammaTz, betaTz)
+    plt.scatter(x,y, label="weakly coupled planes Jz=0.1")
+    #plt.scatter(x, y, label="H={:.2f},TcT={:.3f}, δT={}, γT + βT={}".format(H_meanTz, TcTz, deltaTz, gammaTz+ betaTz))
+
+
+    # tetragonal Jxy=0.1
+    ki_diffTxy = (MsTxy[1::2] - MsTxy[::2]) / 0.1
+    H_meanTxy = (HsTxy[::2] + HsTxy[1::2]) / 2
+    ki_diffTxy = ki_diffTxy[2]
+    H_meanTxy = H_meanTxy[2]
+    x, y = rescale(TsTxy, ki_diffTxy, H_meanTxy, TcTxy, deltaTxy, gammaTxy, betaTxy)
+    plt.scatter(x,y, label="weakly coupled chains Jxy=0.1")
+    #plt.scatter(x, y, label="H={:.2f},TcT={:.3f}, δT={}, γT + βT={}".format(H_meanTxy, TcTxy, deltaTxy, gammaTxy+ betaTxy))
+
+    # 1D chains
+    ki_diff1D = (Ms1D[1::2] - Ms1D[::2]) / 0.1
+    H_mean1D = (Hs1D[::2] + Hs1D[1::2]) / 2
+    ki1D = ki_diff1D[2]
+    H1D = H_mean1D[2]
+    x, y = rescale(Ts1D, ki1D, H1D, Tc1D, delta1D, gamma1D, beta1D)
+    plt.scatter(x,y, label="non interacting chains Jxy=0")
+    #plt.scatter(x, y, label="H={:.2f},Tc={:.3f}, δ={}, γ + β={}".format(H1D, Tc1D, delta1D, gamma1D+ beta1D))
 
     plt.xscale("log")
-    plt.title("Tc={}, δ={}, γ={}, β={}".format(Tc, delta, gamma, beta))
+    #plt.title("Tc={:.3f}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
+    plt.title("Simulated scaling function for various lattices")
     plt.xlabel("εˠ⁺ᵝ/H")
     plt.ylabel("χ/H^(1/̣δ-1)")
 #    plt.xlim(1e-3, 1e1)
 #    plt.ylim(0, 0.25)
-    plt.legend()
-
-    plt.figure()
-    for H, ki in zip(H_mean, ki_diff):
-        # plt.scatter(Ts, ki, label="H={}".format(H))
-        x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
-        plt.scatter(x, y, label="H={}".format(H))
-
-    plt.xscale("log")
-    plt.title("Tc={}, δ={}, γ={}, β={}".format(Tc, delta, gamma, beta))
-    plt.xlabel("εˠ⁺ᵝ/H")
-    plt.ylabel("χ/H^(1/̣δ-1)")
-#    plt.xlim(1e-3, 1e1)
-#    plt.ylim(0, 0.25)
-    plt.legend()
+    plt.legend(loc='upper left')
 
     plt.show()
+
 
 # Plot magnetisations vs Ts for various fields H
 def MsvsTs():
     plt.figure()
     for i in range(len(Ms)): # len(Ms) = num of different H fields used
-        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
+        plt.scatter(Ts, Ms[i], label="H={:.1f}".format(Hs[i]))
+        plt.xlim((0,2.5))
 
     plt.xlabel("T")
-    plt.ylabel("M")
+    plt.ylabel("m")
     plt.legend()
 
 # To find Tc with only one value of H, H=0.
@@ -135,16 +172,42 @@ def MsvsTs0():
         plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
 
     plt.xlabel("T")
-    plt.ylabel("M")
+    plt.ylabel("m")
     plt.legend()
 
 
+def KivsT():
+    ki_fluct = 15 ** 3 * sigmas * sigmas / Ts
 
+    ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
+    H_mean = (Hs[::2] + Hs[1::2]) / 2
+
+    plt.figure()
+    for i in range(len(ki_fluct)): # len(ki_fluct) = num of different H fields used
+        plt.scatter(Ts, ki_fluct[i], label="H={:.1f}".format(Hs[i]))
+        plt.xlim((0,2.5))
+
+    plt.xlabel("T")
+    plt.ylabel("χ")
+    plt.legend()
+
+    plt.figure()
+    for i in range(len(ki_diff)):
+        plt.scatter(Ts, ki_diff[i], label="H={:.2f}".format(H_mean[i]))
+        plt.xlim((0,2.5))
+    
+    plt.xlabel("T")
+    plt.ylabel("χ")
+    plt.legend()
+    plt.show()
+
+
+
+# SIMPLE CUBIC
 with open('HsTsMsSigmas.txt', 'r') as f:
     data = json.load(f)
 Hs, Ts, Ms, sigmas = data[0], data[1], data[2], data[3]
 Hs, Ts, Ms, sigmas = np.array(Hs), np.array(Ts), np.array(Ms), np.array(sigmas)
-
 
 Tc = 0.69
 delta = 6.0  # increasing delta shifts lower fields to lower values
@@ -152,13 +215,50 @@ gamma = 1.19 # increasing gamma or beta (only their sum matters) shifts low fiel
              # and lower values after the peak (worse)
 beta = 0.165
 
-# #MsvsTs0()
-#MsvsTs()
-scaling(Tc, delta, gamma, beta)
-# plt.show()
+
+# # TETRAGONAL Jz=0.1
+# with open('HsTsMsSigmasTetJz=0.1.txt', 'r') as f:
+#     data = json.load(f)
+# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+# HsTz, TsTz, MsTz, sigmasTz = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+
+# # Tetragonal lattice's parameters
+# TcTz = 0.4201
+# deltaTz = 8
+# gammaTz = 1.2
+# betaTz = 0.125
+
+# # TETRAGONAL Jxy=0.1
+# with open('HsTsMsSigmasTetJxy=0.1.txt', 'r') as f:
+#     data = json.load(f)
+# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+# HsTxy, TsTxy, MsTxy, sigmasTxy = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+
+# # Tetragonal lattice's parameters
+# TcTxy = 0.202
+# deltaTxy = 11
+# gammaTxy = 1.2
+# betaTxy = 0.125
+
+# # TETRAGONAL 1D
+# with open('HsTsMsSigmas1D.txt', 'r') as f:
+#     data = json.load(f)
+# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+# Hs1D, Ts1D, Ms1D, sigmas1D = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+
+# # Tetragonal lattice's parameters
+# Tc1D = 0.125
+# delta1D = 1000
+# gamma1D = 1.2
+# beta1D = 0.075
+
+MsvsTs0()
+MsvsTs()
+#scaling(Tc, delta, gamma, beta)
+#KivsT()
 
 
-
+####################################################################################################################################
 
 # Used to be commented, from here...
 # Ts, Ms, Es, sigmasE = retrieveData2()
@@ -307,20 +407,20 @@ def colormap():
 #plt.show()  #this was uncommented
 
 
-i=6
-ki_diff = (Ms[i+1] - Ms[i]) / 0.1
-ki_fluct = sigmas[i] * sigmas[i] / Ts
+# i=6
+# ki_diff = (Ms[i+1] - Ms[i]) / 0.1
+# ki_fluct = sigmas[i] * sigmas[i] / Ts
 
-plt.figure()
+# plt.figure()
 
-plt.scatter(Ts, ki_diff, label="Diff")
-plt.scatter(Ts, 15 ** 3 * ki_fluct, label="Fluct")
+# plt.scatter(Ts, ki_diff, label="Diff")
+# plt.scatter(Ts, 15 ** 3 * ki_fluct, label="Fluct")
 
-plt.xlabel("T")
-plt.ylabel("magnetic susceptibility")
-plt.legend()
-plt.title("With H = {}".format(Hs[i]))
-plt.xlim([0, 30])
+# plt.xlabel("T")
+# plt.ylabel("magnetic susceptibility")
+# plt.legend()
+# plt.title("With H = {}".format(Hs[i]))
+# plt.xlim([0, 30])
 
-plt.show()
+# plt.show()
 

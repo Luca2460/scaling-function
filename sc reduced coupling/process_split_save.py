@@ -76,34 +76,30 @@ def retrieveFromSampleDict(d):
 #     return np.array(Ts), Ms, Es, sigmasE
 
 
-def rescale(T, ki, H, Tc, delta, gamma, beta):
+def rescale(T, ki, H):
+    Tc = 0.67
+
+    delta = 4.9
+    gamma = 1.39
+    beta = 0.365
 
     Treduce = T / Tc - 1
     
     return Treduce ** (gamma + beta) / H, ki / H ** (1 / delta - 1)
 
-def scaling(Tc, delta, gamma, beta):
+def scaling():
     ki_fluct = 15 ** 3 * sigmas * sigmas / Ts
 
     ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
     H_mean = (Hs[::2] + Hs[1::2]) / 2
 
-    # ===========
-    # Adaptation to plot tetragonal2 lattice too in same plot
-    # ki_fluctT = 15 ** 3 * sigmasT * sigmasT / TsT
-
-    # ki_diffT = (MsT[1::2] - MsT[::2]) / 0.1
-    # H_meanT = (HsT[::2] + HsT[1::2]) / 2
-    # ===========
-
     plt.figure()
     for H, ki in zip(Hs, ki_fluct):
         # plt.scatter(Ts, ki, label="H={}".format(H))
-        x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
+        x, y = rescale(Ts, ki, H)
         plt.scatter(x, y, label="H={}".format(H))
 
     plt.xscale("log")
-    plt.title("Tc={}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
     plt.xlabel("εˠ⁺ᵝ/H")
     plt.ylabel("χ/H^(1/̣δ-1)")
 #    plt.xlim(1e-3, 1e1)
@@ -113,18 +109,10 @@ def scaling(Tc, delta, gamma, beta):
     plt.figure()
     for H, ki in zip(H_mean, ki_diff):
         # plt.scatter(Ts, ki, label="H={}".format(H))
-        x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
-        plt.scatter(x, y, label="H={:.2f}".format(H))
-        #plt.scatter(x, y, label="H={},Tc={}, δ={}, γ={}, β={}".format(H, Tc, delta, gamma, beta))
-
-
-    # for H, ki in zip(H_meanT, ki_diffT):
-    #     # plt.scatter(Ts, ki, label="H={}".format(H))
-    #     x, y = rescale(TsT, ki, H, TcT, deltaT, gammaT, betaT)
-    #     plt.scatter(x, y, label="H={},TcT={}, δT={}, γT={}, βT={}".format(H, TcT, deltaT, gammaT, betaT))
+        x, y = rescale(Ts, ki, H)
+        plt.scatter(x, y, label="H={}".format(H))
 
     plt.xscale("log")
-    plt.title("Tc={}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
     plt.xlabel("εˠ⁺ᵝ/H")
     plt.ylabel("χ/H^(1/̣δ-1)")
 #    plt.xlim(1e-3, 1e1)
@@ -137,8 +125,7 @@ def scaling(Tc, delta, gamma, beta):
 def MsvsTs():
     plt.figure()
     for i in range(len(Ms)): # len(Ms) = num of different H fields used
-        plt.scatter(Ts, Ms[i], label="H={:.1f}".format(Hs[i]))
-        plt.xlim((0,2.5))
+        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
 
     plt.xlabel("T")
     plt.ylabel("M")
@@ -155,65 +142,72 @@ def MsvsTs0():
     plt.legend()
 
 
-def KivsT():
-    ki_fluct = 15 ** 3 * sigmas * sigmas / Ts
 
-    ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
-    H_mean = (Hs[::2] + Hs[1::2]) / 2
+### MERGE DATASETS ###
+Mtot = [[], [], [], [], [], [], [], []] # 8 values of H
+sigmastot = [[], [], [], [], [], [], [], []]
+Ttot = []
 
-    plt.figure()
-    for i in range(len(ki_fluct)): # len(ki_fluct) = num of different H fields used
-        plt.scatter(Ts, ki_fluct[i], label="H={:.1f}".format(Hs[i]))
-        plt.xlim((0,2.5))
+################
 
-    plt.xlabel("T")
-    plt.ylabel("χ")
-    plt.legend()
+################
+for i in range(2): ### INSERT NUMBER OF DATASETS HERE ###
+    dataset = "dataset" + str(i+1) + ".hdf5" 
+    f = h5py.File(dataset, "r")
+    Hs, Ts, Ms, sigmas = retrieveData()
+    Ttot.extend(Ts)
+    for i in range(len(Ms)):
+        Mtot[i].extend(Ms[i])
+        sigmastot[i].extend(sigmas[i])
+Ms = np.array(Mtot)
+Ts = np.array(Ttot)
+sigmas = np.array(sigmastot)
 
-    plt.figure()
-    for i in range(len(ki_diff)):
-        plt.scatter(Ts, ki_diff[i], label="H={:.2f}".format(H_mean[i]))
-        plt.xlim((0,2.5))
-    
-    plt.xlabel("T")
-    plt.ylabel("χ")
-    plt.legend()
-    plt.show()
+################
 
+################
 
+# data = np.array([[Hs],[Ms],[Ts],[sigmas]])
+# np.savetxt("HsMsTsSigmas.txt", data, fmt="%s")
 
+Hs = Hs.tolist()
+Ts = Ts.tolist()
+Ms = Ms.tolist()
+sigmas = sigmas.tolist()
+data = [Hs, Ts, Ms, sigmas]
 
-with open('HsTsMsSigmas.txt', 'r') as f:
-    data = json.load(f)
-Hs, Ts, Ms, sigmas = data[0], data[1], data[2], data[3]
-Hs, Ts, Ms, sigmas = np.array(Hs), np.array(Ts), np.array(Ms), np.array(sigmas)
-
-# with open('HsTsMsSigmasTet.txt', 'r') as f:
-#     data = json.load(f)
-# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
-# HsT, TsT, MsT, sigmasT = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
-
-
-Tc = 0.202
-delta = 11  # increasing delta shifts lower fields to lower values
-gamma = 1.2 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
-             # and lower values after the peak (worse)
-beta = 0.125
-
-# Tetragonal lattice's parameters
-# TcT = 0.4201
-# deltaT = 8
-# gammaT = 1.2
-# betaT = 0.125
-
-# #MsvsTs0()
-# MsvsTs()
-# KivsT()
-scaling(Tc, delta, gamma, beta)
+with open('HsTsMsSigmas.txt', 'w') as f:
+    json.dump(data, f)
 
 
+#MsvsTs0()
+#MsvsTs()
+#scaling()
+#plt.show()
 
-####################################################################################################################################
+
+# # PLOTING SCALING FUNCTION (requires plt.show(), actually at the bottom)
+# Hs, Ts, Ms, sigmas = retrieveData()
+# scaling()
+
+#TEST#
+# ki_fluct = 15 ** 3 * sigmas * sigmas / Ts
+# ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
+# H_mean = (Hs[::2] + Hs[1::2]) / 2
+
+
+# print(np.ndim(ki_diff))
+
+# print(Ts)
+# # plt.scatter(Ts, ki_diff)
+# # plt.scatter(Ts, ki_fluct)
+# # plt.scatter(Ts, Ms)
+
+# plt.xlabel("T")
+# plt.ylabel("Mz per site")
+# plt.xlim(0.1, 1.2)
+#END TEST#
+
 
 # Used to be commented, from here...
 # Ts, Ms, Es, sigmasE = retrieveData2()
@@ -375,7 +369,6 @@ def colormap():
 # plt.ylabel("magnetic susceptibility")
 # plt.legend()
 # plt.title("With H = {}".format(Hs[i]))
-# plt.xlim([0, 30])
 
 # plt.show()
 

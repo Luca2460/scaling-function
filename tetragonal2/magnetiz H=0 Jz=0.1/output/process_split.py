@@ -137,7 +137,7 @@ def MsvsTs0():
         plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
 
     plt.xlabel("T")
-    plt.ylabel("M")
+    plt.ylabel("m")
     plt.legend()
 
 
