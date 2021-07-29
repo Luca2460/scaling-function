@@ -5,22 +5,21 @@ from os import system
 import h5py
 
 # used to generate dataset (?) (you need to manually change the name of the dataset below)
-Hs = np.array([0.1, 0.2,
-              1, 1.1,
-              2, 2.1,
-              3, 3.1])
+# Hs = np.array([0.1, 0.2,
+#               1, 1.1,
+#               2, 2.1,
+#               3, 3.1])
+
+Hs = np.array([5, 5.1,
+               10, 10.1,
+               30, 30.1])
 
 # used to generate dataset0 (?). Zero field only needed for phase transition and not for scaling function
 #Hs = np.array([0])
 
-# Tc = 0.125
-# Ts = np.linspace(-6, -2, 25) # 20 # Ts = np.linspace(0.1, 2, 200) 
-# Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
-# Ts = Tc + Tc*np.exp(Ts)
-
 Tc = 0.125
 Ts = np.linspace(-6, 5, 100) # 20 # Ts = np.linspace(0.1, 2, 200) 
-Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
+Ts = Ts*np.log(10)/1.33 # 1.33 should be gamma + beta
 Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
@@ -34,7 +33,7 @@ Nsample = 20
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H
-with h5py.File("dataset2.hdf5", "w") as f:
+with h5py.File("dataset4.hdf5", "w") as f:
     f.attrs["config"] = config
     f.attrs["Nanneal"] = Nanneal
 
