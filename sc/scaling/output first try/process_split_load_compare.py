@@ -114,6 +114,15 @@ def scaling(Tc, delta, gamma, beta):
     plt.scatter(x,y, label="simple cubic")
     #plt.scatter(x, y, label="H={:.2f},Tc={:.3f}, δ={}, γ + β={}".format(H, Tc, delta, gamma+ beta))
 
+    # sc reduced coupling
+    ki_diff07 = (Ms07[1::2] - Ms07[::2]) / 0.1
+    H_mean07 = (Hs07[::2] + Hs07[1::2]) / 2
+    ki07 = ki_diff07[2]
+    H07 = H_mean07[2]
+    x, y = rescale(Ts07, ki07, H07, Tc07, delta07, gamma07, beta07)
+    plt.scatter(x,y, label="sc reduced coupling 0.7")
+    #plt.scatter(x, y, label="H={:.2f},Tc={:.3f}, δ={}, γ + β={}".format(H1D, Tc1D, delta1D, gamma1D+ beta1D))
+
     # tetragonal Jz=0.1
     ki_diffTz = (MsTz[1::2] - MsTz[::2]) / 0.1
     H_meanTz = (HsTz[::2] + HsTz[1::2]) / 2
@@ -142,6 +151,8 @@ def scaling(Tc, delta, gamma, beta):
     plt.scatter(x,y, label="non interacting chains Jxy=0")
     #plt.scatter(x, y, label="H={:.2f},Tc={:.3f}, δ={}, γ + β={}".format(H1D, Tc1D, delta1D, gamma1D+ beta1D))
 
+
+    # other stuff for the plot
     plt.xscale("log")
     #plt.title("Tc={:.3f}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
     plt.title("Simulated scaling function for various lattices")
@@ -215,46 +226,58 @@ gamma = 1.19 # increasing gamma or beta (only their sum matters) shifts low fiel
              # and lower values after the peak (worse)
 beta = 0.165
 
+# SIMPLE CUBIC REDUCED COUPLING
+with open('HsTsMsSigmas07.txt', 'r') as f:
+    data = json.load(f)
+HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+Hs07, Ts07, Ms07, sigmas07 = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
 
-# # TETRAGONAL Jz=0.1
-# with open('HsTsMsSigmasTetJz=0.1.txt', 'r') as f:
-#     data = json.load(f)
-# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
-# HsTz, TsTz, MsTz, sigmasTz = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+# SC reduced coupling's parameters
+Tc07 = 0.482
+delta07 = 6.0
+gamma07 = 1.2
+beta07 = 0.125
 
-# # Tetragonal lattice's parameters
-# TcTz = 0.4201
-# deltaTz = 8
-# gammaTz = 1.2
-# betaTz = 0.125
+# TETRAGONAL Jz=0.1
+with open('HsTsMsSigmasTetJz=0.1.txt', 'r') as f:
+    data = json.load(f)
+HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+HsTz, TsTz, MsTz, sigmasTz = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
 
-# # TETRAGONAL Jxy=0.1
-# with open('HsTsMsSigmasTetJxy=0.1.txt', 'r') as f:
-#     data = json.load(f)
-# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
-# HsTxy, TsTxy, MsTxy, sigmasTxy = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+# Tetragonal lattice's parameters
+TcTz = 0.4201
+deltaTz = 8
+gammaTz = 1.2
+betaTz = 0.125
 
-# # Tetragonal lattice's parameters
-# TcTxy = 0.202
-# deltaTxy = 11
-# gammaTxy = 1.2
-# betaTxy = 0.125
+# TETRAGONAL Jxy=0.1
+with open('HsTsMsSigmasTetJxy=0.1.txt', 'r') as f:
+    data = json.load(f)
+HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+HsTxy, TsTxy, MsTxy, sigmasTxy = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
 
-# # TETRAGONAL 1D
-# with open('HsTsMsSigmas1D.txt', 'r') as f:
-#     data = json.load(f)
-# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
-# Hs1D, Ts1D, Ms1D, sigmas1D = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+# Tetragonal lattice's parameters
+TcTxy = 0.202
+deltaTxy = 11
+gammaTxy = 1.2
+betaTxy = 0.125
 
-# # Tetragonal lattice's parameters
-# Tc1D = 0.125
-# delta1D = 1000
-# gamma1D = 1.2
-# beta1D = 0.075
+# TETRAGONAL 1D
+with open('HsTsMsSigmas1D.txt', 'r') as f:
+    data = json.load(f)
+HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
+Hs1D, Ts1D, Ms1D, sigmas1D = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
 
-MsvsTs0()
-MsvsTs()
-#scaling(Tc, delta, gamma, beta)
+# Tetragonal lattice's parameters
+Tc1D = 0.125
+delta1D = 1000
+gamma1D = 1.2
+beta1D = 0.075
+
+
+# MsvsTs0()
+# MsvsTs()
+scaling(Tc, delta, gamma, beta)
 #KivsT()
 
 

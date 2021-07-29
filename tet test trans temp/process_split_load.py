@@ -146,9 +146,9 @@ Hs, Ts, Ms, sigmas = data[0], data[1], data[2], data[3]
 Hs, Ts, Ms, sigmas = np.array(Hs), np.array(Ts), np.array(Ms), np.array(sigmas)
 
 
-Tc = 0.482
-delta = 6.0  # increasing delta shifts lower fields to lower values
-gamma = 1.20 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
+Tc = 0.12
+delta = 1000.0  # increasing delta shifts lower fields to lower values
+gamma = 0.50 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
              # and lower values after the peak (worse)
 beta = 0.125
 
