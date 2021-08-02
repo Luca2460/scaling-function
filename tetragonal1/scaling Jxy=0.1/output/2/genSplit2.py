@@ -10,7 +10,8 @@ import h5py
 #                2, 2.1,
 #                3, 3.1])
 
-Hs = np.array([5, 5.1,
+Hs = np.array([3, 3.1,
+               5, 5.1,
                10, 10.1,
                30, 30.1])
 
@@ -18,18 +19,18 @@ Hs = np.array([5, 5.1,
 # Hs = np.array([0])
 
 Tc = 0.205
-Ts = np.linspace(-6, 5, 100) # 20 # Ts = np.linspace(0.1, 2, 200) 
-Ts = Ts*np.log(10)/1.76 # 1.76 should be gamma + beta
+Ts = np.linspace(-6, 0, 33) # 20 # Ts = np.linspace(0.1, 2, 200) 
+Ts = Ts*np.log(10)/1.33 # 1.33 should be gamma + beta
 Ts = Tc + Tc*np.exp(Ts)
 
 config = "big.in"
 outdir = "" #"data/big/"
-Nanneal = 5000 # to be adjusted with the total number of thermalization steps
+Nanneal = 3000 # to be adjusted with the total number of thermalization steps
 
 outfile = outdir + "out"
 statefile = outdir + "state"
 
-Nsample = 20
+Nsample = 15
 samples = ["sample_{}".format(i+1) for i in range(Nsample)]
 
 # CHANGE dataset.hdf5 WITH dataset0.hdf5 WHEN CHANGING THE VALUES FOR H

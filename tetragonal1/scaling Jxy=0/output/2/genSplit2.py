@@ -57,7 +57,7 @@ with h5py.File("dataset4.hdf5", "w") as f:
             grp2.attrs["T"] = Ts[0]
             # Run the simulation
             system("./sim {} \"filename={}\" \"temperature={}\" \"H=(0 0 {})\" \"outstate={}\""
-                   .format(config, outfile, Ts[0], H, statefile)) # could add \"ds={}\" and ds in format() to impose ds from gen like Ts
+                   .format(config, outfile, Ts[0], H, statefile)) # could add \"ds={}\" and ds in format() to impose ds from gen.py like Ts
             # Store data
             data = np.loadtxt(outfile)
             dset = grp2.create_dataset(sample, data=data)

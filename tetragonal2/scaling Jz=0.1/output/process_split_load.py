@@ -21,8 +21,8 @@ def MandSigmaFromSampleDict(d, err=False):
     
     for sample in d.values():
         # AVERAGES OVER SAMPLES
-        Ms.append(np.mean(sample[:, 8])) # 8 might need to be updated to the number of fields (?)
-        sigmas.append(np.std(sample[:, 8]))
+        Ms.append(np.mean(sample[:, 11])) # 11 might need to be updated to the number of fields (?) # 11 USED TO BE 8 
+        sigmas.append(np.std(sample[:, 11]))
 
     errs = None
     if err:
@@ -88,22 +88,34 @@ def scaling(Tc, delta, gamma, beta):
     ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
     H_mean = (Hs[::2] + Hs[1::2]) / 2
 
-    # ===========
-    # Adaptation to plot tetragonal2 lattice too in same plot
-    # ki_fluctT = 15 ** 3 * sigmasT * sigmasT / TsT
+    # Implementing high fields data (only done cause those field were run separately)
+    ki_fluctHigh = 15 ** 3 * sigmasHigh * sigmasHigh / TsHigh
 
-    # ki_diffT = (MsT[1::2] - MsT[::2]) / 0.1
-    # H_meanT = (HsT[::2] + HsT[1::2]) / 2
-    # ===========
+    ki_diffHigh = (MsHigh[1::2] - MsHigh[::2]) / 0.1
+    H_meanHigh = (HsHigh[::2] + HsHigh[1::2]) / 2
+
+    # input(Ms[1::2])
+    # input("\n")
+    # input(Ms[::2])
+    # input("\n")
+    
+    # input(HsHigh[1::2])
 
     plt.figure()
-    for H, ki in zip(Hs, ki_fluct):
+    for H, ki in zip(Hs[::2], ki_fluct[::2]):   #  for H, ki in zip(Hs, ki_fluct):
         # plt.scatter(Ts, ki, label="H={}".format(H))
         x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
         plt.scatter(x, y, label="H={}".format(H))
 
+    # High fields
+    for H, ki in zip(HsHigh[::2], ki_fluctHigh[::2]):
+        # plt.scatter(Ts, ki, label="H={}".format(H))
+        x, y = rescale(TsHigh, ki, H, Tc, delta, gamma, beta)
+        plt.scatter(x, y, label="H={}".format(H))
+
+
     plt.xscale("log")
-    plt.title("Tc={:.2f}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
+    plt.title("Tc={}, δ={}, γ={}, β={}".format(Tc, delta, gamma, beta))
     plt.xlabel("εˠ⁺ᵝ/H")
     plt.ylabel("χ/H^(1/̣δ-1)")
 #    plt.xlim(1e-3, 1e1)
@@ -114,17 +126,16 @@ def scaling(Tc, delta, gamma, beta):
     for H, ki in zip(H_mean, ki_diff):
         # plt.scatter(Ts, ki, label="H={}".format(H))
         x, y = rescale(Ts, ki, H, Tc, delta, gamma, beta)
-        plt.scatter(x, y, label="H={:.2f}".format(H))
-        #plt.scatter(x, y, label="H={},Tc={}, δ={}, γ={}, β={}".format(H, Tc, delta, gamma, beta))
+        plt.scatter(x, y, label="H={}".format(H))
 
-
-    # for H, ki in zip(H_meanT, ki_diffT):
-    #     # plt.scatter(Ts, ki, label="H={}".format(H))
-    #     x, y = rescale(TsT, ki, H, TcT, deltaT, gammaT, betaT)
-    #     plt.scatter(x, y, label="H={},TcT={}, δT={}, γT={}, βT={}".format(H, TcT, deltaT, gammaT, betaT))
+    # High fields
+    for H, ki in zip(H_meanHigh, ki_diffHigh):
+        # plt.scatter(Ts, ki, label="H={}".format(H))
+        x, y = rescale(TsHigh, ki, H, Tc, delta, gamma, beta)
+        plt.scatter(x, y, label="H={}".format(H))
 
     plt.xscale("log")
-    plt.title("Tc={:.2f}, δ={}, γ + β={}".format(Tc, delta, gamma+ beta))
+    plt.title("Tc={}, δ={}, γ={}, β={}".format(Tc, delta, gamma, beta))
     plt.xlabel("εˠ⁺ᵝ/H")
     plt.ylabel("χ/H^(1/̣δ-1)")
 #    plt.xlim(1e-3, 1e1)
@@ -136,8 +147,12 @@ def scaling(Tc, delta, gamma, beta):
 # Plot magnetisations vs Ts for various fields H
 def MsvsTs():
     plt.figure()
-    for i in range(len(Ms)): # len(Ms) = num of different H fields used
-        plt.scatter(Ts, Ms[i], label="H={:.1f}".format(Hs[i]))
+    for i in range(len(Ms[::2])): # len(Ms) = num of different H fields used
+        plt.scatter(Ts[::2], Ms[i][::2], label="H={}".format(Hs[2*i+1]))
+        plt.xlim((0,2.5))        
+
+    for i in range(len(MsHigh)): # len(Ms) = num of different H fields used
+        plt.scatter(TsHigh[::2], MsHigh[i][::2], label="H={}".format(HsHigh[i]))
         plt.xlim((0,2.5))
 
     plt.xlabel("T")
@@ -154,16 +169,26 @@ def MsvsTs0():
     plt.ylabel("M")
     plt.legend()
 
-
 def KivsT():
     ki_fluct = 15 ** 3 * sigmas * sigmas / Ts
 
     ki_diff = (Ms[1::2] - Ms[::2]) / 0.1
     H_mean = (Hs[::2] + Hs[1::2]) / 2
 
+    # Implementing high fields data (only done cause those field were run separately)
+    ki_fluctHigh = 15 ** 3 * sigmasHigh * sigmasHigh / TsHigh
+
+    ki_diffHigh = (MsHigh[1::2] - MsHigh[::2]) / 0.1
+    H_meanHigh = (HsHigh[::2] + HsHigh[1::2]) / 2
+
+
     plt.figure()
     for i in range(len(ki_fluct)): # len(ki_fluct) = num of different H fields used
         plt.scatter(Ts, ki_fluct[i], label="H={:.1f}".format(Hs[i]))
+        plt.xlim((0,2.5))
+
+    for i in range(len(ki_fluctHigh)): # len(ki_fluct) = num of different H fields used
+        plt.scatter(TsHigh, ki_fluctHigh[i], label="H={:.1f}".format(HsHigh[i]))
         plt.xlim((0,2.5))
 
     plt.xlabel("T")
@@ -174,13 +199,15 @@ def KivsT():
     for i in range(len(ki_diff)):
         plt.scatter(Ts, ki_diff[i], label="H={:.2f}".format(H_mean[i]))
         plt.xlim((0,2.5))
-    
+
+    for i in range(len(ki_diffHigh)):
+        plt.scatter(TsHigh, ki_diffHigh[i], label="H={:.2f}".format(H_meanHigh[i]))
+        plt.xlim((0,2.5))
+
     plt.xlabel("T")
     plt.ylabel("χ")
     plt.legend()
     plt.show()
-
-
 
 
 with open('HsTsMsSigmas.txt', 'r') as f:
@@ -188,31 +215,29 @@ with open('HsTsMsSigmas.txt', 'r') as f:
 Hs, Ts, Ms, sigmas = data[0], data[1], data[2], data[3]
 Hs, Ts, Ms, sigmas = np.array(Hs), np.array(Ts), np.array(Ms), np.array(sigmas)
 
-# with open('HsTsMsSigmasTet.txt', 'r') as f:
-#     data = json.load(f)
-# HsT, TsT, MsT, sigmasT = data[0], data[1], data[2], data[3]
-# HsT, TsT, MsT, sigmasT = np.array(HsT), np.array(TsT), np.array(MsT), np.array(sigmasT)
+with open('HsTsMsSigmasHighFields.txt', 'r') as f:
+    data = json.load(f)
+HsHigh, TsHigh, MsHigh, sigmasHigh = data[0], data[1], data[2], data[3]
+HsHigh, TsHigh, MsHigh, sigmasHigh = np.array(HsHigh), np.array(TsHigh), np.array(MsHigh), np.array(sigmasHigh)
+
+
 
 
 Tc = 0.4201
 delta = 8.0  # increasing delta shifts lower fields to lower values
-gamma = 1.2 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
+gamma = 1.20 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
              # and lower values after the peak (worse)
 beta = 0.125
 
-# Tetragonal lattice's parameters
-# TcT = 0.4201
-# deltaT = 8
-# gammaT = 1.2
-# betaT = 0.125
 
 # #MsvsTs0()
-# MsvsTs()
-# KivsT()
+MsvsTs()
 scaling(Tc, delta, gamma, beta)
+#KivsT()
+# plt.show()
 
 
-####################################################################################################################################
+
 
 # Used to be commented, from here...
 # Ts, Ms, Es, sigmasE = retrieveData2()
@@ -374,7 +399,6 @@ def colormap():
 # plt.ylabel("magnetic susceptibility")
 # plt.legend()
 # plt.title("With H = {}".format(Hs[i]))
-# plt.xlim([0, 30])
 
 # plt.show()
 
