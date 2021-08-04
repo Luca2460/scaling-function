@@ -21,8 +21,8 @@ def MandSigmaFromSampleDict(d, err=False):
     
     for sample in d.values():
         # AVERAGES OVER SAMPLES
-        Ms.append(np.mean(sample[:, 11])) # 11 might need to be updated to the number of fields (?) # 11 USED TO BE 8 
-        sigmas.append(np.std(sample[:, 11]))
+        Ms.append(np.mean(sample[:, 8]))
+        sigmas.append(np.std(sample[:, 8]))
 
     errs = None
     if err:
@@ -230,11 +230,11 @@ HsHigh, TsHigh, MsHigh, sigmasHigh = np.array(HsHigh), np.array(TsHigh), np.arra
 #              # and lower values after the peak (worse)
 # beta = 0.125
 
-Tc = 0.215
-delta = 15.0  # increasing delta shifts lower fields to lower values
-gamma = 1.10 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
+Tc = 0.482
+delta = 12.0  # increasing delta shifts lower fields to lower values
+gamma = 1.125 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
              # and lower values after the peak (worse)
-beta = 0.125
+beta = 0.0
 
 # #MsvsTs0()
 MsvsTs()

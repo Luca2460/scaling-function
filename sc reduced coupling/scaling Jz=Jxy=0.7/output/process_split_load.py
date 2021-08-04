@@ -21,8 +21,8 @@ def MandSigmaFromSampleDict(d, err=False):
     
     for sample in d.values():
         # AVERAGES OVER SAMPLES
-        Ms.append(np.mean(sample[:, 11])) # 11 might need to be updated to the number of fields (?) # 11 USED TO BE 8 
-        sigmas.append(np.std(sample[:, 11]))
+        Ms.append(np.mean(sample[:, 8]))
+        sigmas.append(np.std(sample[:, 8]))
 
     errs = None
     if err:
@@ -150,12 +150,12 @@ def MsvsTs():
     # for i in range(len(Ms)): # len(Ms) = num of different H fields used
     #     plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
     plt.figure()
-    for i in range(len(Ms[::2])): # len(Ms) = num of different H fields used
-        plt.scatter(Ts[::2], Ms[i][::2], label="H={}".format(Hs[2*i+1]))
+    for i in range(len(Ms)): # len(Ms) = num of different H fields used
+        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
         plt.xlim((0,2.5))        
 
     for i in range(len(MsHigh)): # len(Ms) = num of different H fields used
-        plt.scatter(TsHigh[::2], MsHigh[i][::2], label="H={}".format(HsHigh[i]))
+        plt.scatter(TsHigh, MsHigh[i], label="H={}".format(HsHigh[i]))
         plt.xlim((0,2.5))
 
     plt.xlabel("T")

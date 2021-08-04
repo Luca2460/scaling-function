@@ -21,7 +21,7 @@ def MandSigmaFromSampleDict(d, err=False):
     
     for sample in d.values():
         # AVERAGES OVER SAMPLES
-        Ms.append(np.mean(sample[:, 8])) # 8 might need to be updated to the number of fields (?)
+        Ms.append(np.mean(sample[:, 8]))
         sigmas.append(np.std(sample[:, 8]))
 
     errs = None
@@ -146,13 +146,15 @@ def MsvsTs0():
 ### MERGE DATASETS ###
 Mtot = [[], [], [], [], [], [], [], []] # 8 values of H
 sigmastot = [[], [], [], [], [], [], [], []]
+# Mtot = [[], [], [], [], [], []] # 6 values of H
+# sigmastot = [[], [], [], [], [], []]
 Ttot = []
 
 ################
 
 ################
-for i in range(2): ### INSERT NUMBER OF DATASETS HERE ###
-    dataset = "dataset" + str(i+1) + ".hdf5" 
+for i in range(3): ### INSERT NUMBER OF DATASETS HERE ###
+    dataset = "dataset" + str(i+3) + ".hdf5" 
     f = h5py.File(dataset, "r")
     Hs, Ts, Ms, sigmas = retrieveData()
     Ttot.extend(Ts)
@@ -176,9 +178,16 @@ Ms = Ms.tolist()
 sigmas = sigmas.tolist()
 data = [Hs, Ts, Ms, sigmas]
 
-with open('HsTsMsSigmas.txt', 'w') as f:
+with open('HsTsMsSigmasHighFields.txt', 'w') as f: # HsTsMsSigmasHighFields
     json.dump(data, f)
 
+# # FOR HIGH FIELD DATASETS:
+# Change the name of the txt file here
+# Change the range in the dataset script and in the following line:    dataset = "dataset" + str(i+1) + ".hdf5" (Change (i+1))
+# Change the numeber in lines:
+#         # AVERAGES OVER SAMPLES
+#         Ms.append(np.mean(sample[:, 8])) # 6 might need to be updated to the number of fields (?) # 6 USED TO BE 8
+#         sigmas.append(np.std(sample[:, 8]))
 
 #MsvsTs0()
 #MsvsTs()

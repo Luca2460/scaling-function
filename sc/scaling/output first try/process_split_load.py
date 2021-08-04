@@ -150,12 +150,12 @@ def MsvsTs():
     # for i in range(len(Ms)): # len(Ms) = num of different H fields used
     #     plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
     plt.figure()
-    for i in range(len(Ms[::2])): # len(Ms) = num of different H fields used
-        plt.scatter(Ts[::2], Ms[i][::2], label="H={}".format(Hs[2*i+1]))
+    for i in range(len(Ms)): # len(Ms) = num of different H fields used
+        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
         plt.xlim((0,2.5))        
 
     for i in range(len(MsHigh)): # len(Ms) = num of different H fields used
-        plt.scatter(TsHigh[::2], MsHigh[i][::2], label="H={}".format(HsHigh[i]))
+        plt.scatter(TsHigh, MsHigh[i], label="H={}".format(HsHigh[i]))
         plt.xlim((0,2.5))
 
     plt.xlabel("T")
@@ -224,15 +224,15 @@ HsHigh, TsHigh, MsHigh, sigmasHigh = data[0], data[1], data[2], data[3]
 HsHigh, TsHigh, MsHigh, sigmasHigh = np.array(HsHigh), np.array(TsHigh), np.array(MsHigh), np.array(sigmasHigh)
 
 
-# Tc = 0.482
+# Tc = 0.69
 # delta = 6.0  # increasing delta shifts lower fields to lower values
-# gamma = 1.20 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
+# gamma = 1.23 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
 #              # and lower values after the peak (worse)
 # beta = 0.125
 
-Tc = 0.69
-delta = 6.0  # increasing delta shifts lower fields to lower values
-gamma = 1.23 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
+
+delta = 10.0 #16      # increasing delta shifts lower fields to lower values
+gamma = 1.0 # increasing gamma or beta (only their sum matters) shifts low fields to higher values before the peak
              # and lower values after the peak (worse)
 beta = 0.125
 

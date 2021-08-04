@@ -146,13 +146,16 @@ def scaling(Tc, delta, gamma, beta):
 
 # Plot magnetisations vs Ts for various fields H
 def MsvsTs():
+    # plt.figure()
+    # for i in range(len(Ms)): # len(Ms) = num of different H fields used
+    #     plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
     plt.figure()
-    for i in range(len(Ms[::2])): # len(Ms) = num of different H fields used
-        plt.scatter(Ts[::2], Ms[i][::2], label="H={}".format(Hs[2*i+1]))
+    for i in range(len(Ms)): # len(Ms) = num of different H fields used
+        plt.scatter(Ts, Ms[i], label="H={}".format(Hs[i]))
         plt.xlim((0,2.5))        
 
     for i in range(len(MsHigh)): # len(Ms) = num of different H fields used
-        plt.scatter(TsHigh[::2], MsHigh[i][::2], label="H={}".format(HsHigh[i]))
+        plt.scatter(TsHigh, MsHigh[i], label="H={}".format(HsHigh[i]))
         plt.xlim((0,2.5))
 
     plt.xlabel("T")
@@ -233,7 +236,7 @@ beta = 0.125
 # #MsvsTs0()
 MsvsTs()
 scaling(Tc, delta, gamma, beta)
-#KivsT()
+KivsT()
 # plt.show()
 
 
